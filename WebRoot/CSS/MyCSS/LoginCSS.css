@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+body {
+	background-color: #1c77ac;
+	background-image: url("../../Image/OtherImage/light.png");
+	background-repeat: no-repeat;
+}
+
+label span{
+	display: inline;
+}
+
+.loginbm span{
+	display: inline;
+}
+
+.loginbox {
+	position: absolute;
+	left: 337px;
+	background-image: url("../../Image/OtherImage/logininfo.png");
+}

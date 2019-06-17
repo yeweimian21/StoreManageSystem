@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.sh.manage.entity">
+	<class name="Development" table="T_Development">
+		<id name="developmentId" type="java.lang.Integer">
+			<column name="developmentId"></column>
+			<generator class="sequence">
+				<param name="sequence">development_id_seq</param>
+			</generator>
+		</id>
+
+		<property name="developmentType" type="java.lang.String">
+			<column name="developmentType" not-null="true" length="20"></column>
+		</property>
+
+		<many-to-one name="store" column="storeIdForeign" class="Store"></many-to-one>
+		
+		<property name="storeName" type="java.lang.String">
+			<column name="storeName" not-null="true" length="50"></column>
+		</property>
+		
+		<property name="storeIdSelf" type="java.lang.Integer">
+			<column name="storeIdSelf" not-null="true"></column>
+		</property>
+		
+		<property name="developmentTitle" type="java.lang.String">
+			<column name="developmentTitle" not-null="true" length="50"></column>
+		</property>
+		
+		<property name="developmentContent" type="java.lang.String">
+			<column name="developmentContent" not-null="true" length="100"></column>
+		</property>
+	</class>
+</hibernate-mapping>

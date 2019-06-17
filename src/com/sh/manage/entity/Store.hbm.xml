@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.sh.manage.entity">
+	<class name="Store" table="T_Store">
+		<id name="storeId" type="java.lang.Integer">
+			<column name="storeId"></column>
+			<generator class="sequence">
+				<param name="sequence">store_id_seq</param>
+			</generator>
+		</id>
+
+		<property name="storeName" type="java.lang.String">
+			<column name="storeName" not-null="true" length="50"></column>
+		</property>
+
+		<property name="managerName" type="java.lang.String">
+			<column name="managerName" not-null="false" length="50"></column>
+		</property>
+
+		<property name="managerId" type="java.lang.Integer">
+			<column name="managerId" not-null="true"></column>
+		</property>
+
+		<property name="storeAddress" type="java.lang.String">
+			<column name="storeAddress" not-null="true" length="50"></column>
+		</property>
+
+		<property name="storePhone" type="java.lang.String">
+			<column name="storePhone" not-null="true" length="50"></column>
+		</property>
+
+		<set name="services" lazy="false" cascade="delete" inverse="true">
+			<key column="storeIdForeign" not-null="true"></key>
+			<one-to-many class="Service" />
+		</set>
+
+		<set name="developments" lazy="false" cascade="delete" inverse="true">
+			<key column="storeIdForeign" not-null="true"></key>
+			<one-to-many class="Development" />
+		</set>
+	</class>
+</hibernate-mapping>

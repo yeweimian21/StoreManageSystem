@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "struts-2.1.7.dtd" >
+<struts>
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+
+	<package name="default" namespace="/" extends="json-default,struts-default">
+		<action name="*User" class="userAction" method="{1}User">
+			<result name="success_get_userId" type="redirectAction">setCheckDisplay</result>
+			<result name="not_right" type="redirect">JSP/Login.jsp</result>
+			<result name="success_exit" type="redirect">JSP/Login.jsp</result>
+			<result name="success_add" type="redirect">JSP/Login.jsp</result>
+			<result name="success_update" type="redirect">JSP/ManageUser/UpdateUser.jsp</result>
+			<result name="success_delete" type="redirect">JSP/ManageUser/DeleteUser.jsp</result>
+		</action>
+		
+		<action name="*CheckDisplay" class="userRoleRightAction" method="{1}CheckDisplay">
+			<result name="success_login" type="redirect">JSP/Main.jsp</result>
+		</action>
+		
+		<action name="*Role" class="roleAction" method="{1}Role">
+			<result name="success_add" type="redirect">JSP/ManageUser/CreateRole.jsp</result>
+			<result name="success_update" type="redirect">JSP/ManageUser/UpdateRole.jsp</result>
+			<result name="success_delete" type="redirect">JSP/ManageUser/DeleteRole.jsp</result>
+		</action>
+
+		<action name="*Right" class="rightAction" method="{1}Right">
+			<result name="success_add" type="redirect">JSP/ManageUser/CreateRight.jsp</result>
+			<result name="success_update" type="redirect">JSP/ManageUser/UpdateRight.jsp</result>
+			<result name="success_delete" type="redirect">JSP/ManageUser/DeleteRight.jsp</result>
+		</action>
+		
+		<action name="*UserRoleManage" class="userRoleAction" method="{1}UserRoleManage">
+			<result name="success_delete" type="redirectAction">addUserRoleManage</result>
+			<result name="success_add" type="redirect">JSP/ManageUser/ManageUserRoleChoose.jsp</result>
+		</action>
+		
+		<action name="*RoleRightManage" class="roleRightAction" method="{1}RoleRightManage">
+			<result name="success_delete" type="redirectAction">addRoleRightManage</result>
+			<result name="success_add" type="redirect">JSP/ManageUser/ManageRoleRightChoose.jsp</result>
+		</action>
+		
+		<action name="*UserRoleMix" class="userRoleAction" method="{1}UserRoleMix">
+			
+		</action>
+		
+		<action name="*RoleRightMix" class="roleRightAction" method="{1}RoleRightMix">
+			
+		</action>
+		
+		<action name="*RoleUserMix" class="userRoleAction" method="{1}RoleUserMix">
+			
+		</action>
+
+		<action name="*Store" class="storeAction" method="{1}Store">
+			<result name="success_add" type="redirect">JSP/ManageStore/CreateStore.jsp</result>
+			<result name="success_update" type="redirect">JSP/ManageStore/UpdateStore.jsp</result>
+			<result name="success_delete" type="redirect">JSP/ManageStore/DeleteStore.jsp</result>
+		</action>
+		
+		<action name="*Service" class="serviceAction" method="{1}Service">
+			<result name="success_add" type="redirect">JSP/ManageStore/CreateService.jsp</result>
+			<result name="success_update" type="redirect">JSP/ManageStore/UpdateService.jsp</result>
+			<result name="success_delete" type="redirect">JSP/ManageStore/DeleteService.jsp</result>
+		</action>
+		
+		<action name="*Development" class="developmentAction" method="{1}Development">
+			<result name="success_add" type="redirect">JSP/ManageStore/CreateDevelopment.jsp</result>
+			<result name="success_update" type="redirect">JSP/ManageStore/UpdateDevelopment.jsp</result>
+			<result name="success_delete" type="redirect">JSP/ManageStore/DeleteDevelopment.jsp</result>
+		</action>
+	</package>
+</struts>

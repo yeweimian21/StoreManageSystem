@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.sh.manage.entity">
+	<class name="User" table="T_User_Wash">
+		<id name="userId" type="java.lang.Integer">
+			<column name="userId"></column>
+			<generator class="sequence">
+				<param name="sequence">user_id_seq</param>
+			</generator>
+		</id>
+		
+		<property name="userName" type="java.lang.String">
+			<column name="userName" not-null="true" length="50"></column>
+		</property>
+		
+		<property name="password" type="java.lang.String">
+			<column name="password" not-null="true" length="50"></column>
+		</property>
+		
+		<property name="sex" type="java.lang.String">
+			<column name="sex" not-null="true" length="50"></column>
+		</property>
+		
+		<property name="age" type="java.lang.Integer">
+			<column name="age" not-null="true"></column>
+		</property>
+		
+		<property name="phone" type="java.lang.String">
+			<column name="phone" not-null="true" length="50"></column>
+		</property>
+		
+		<property name="email" type="java.lang.String">
+			<column name="email" not-null="true" length="50"></column>
+		</property>
+	</class>
+</hibernate-mapping>

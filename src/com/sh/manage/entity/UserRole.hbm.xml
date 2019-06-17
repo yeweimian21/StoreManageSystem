@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.sh.manage.entity">
+	<class name="UserRole" table="T_UserRole">
+		<id name="userRoleId" type="java.lang.Integer">
+			<column name="userRoleId"></column>
+			<generator class="sequence">
+				<param name="sequence">userrole_id_seq</param>
+			</generator>
+		</id>
+		
+		<property name="userId" type="java.lang.Integer">
+			<column name="userId" not-null="true"></column>
+		</property>
+		
+		<property name="roleId" type="java.lang.Integer">
+			<column name="roleId" not-null="true"></column>
+		</property>
+	</class>
+</hibernate-mapping>

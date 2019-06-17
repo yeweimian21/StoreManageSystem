@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:ORCL"></property>
+		<property name="username" value="neu"></property>
+		<property name="password" value="oracle"></property>
+	</bean>
+
+	<!-- 会话配置 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.connection.autocommit">true</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<!-- 项目应用实体对象 -->
+				<value>com/sh/manage/entity/User.hbm.xml</value>
+				<value>com/sh/manage/entity/Role.hbm.xml</value>
+				<value>com/sh/manage/entity/Right.hbm.xml</value>
+				<value>com/sh/manage/entity/UserRole.hbm.xml</value>
+				<value>com/sh/manage/entity/RoleRight.hbm.xml</value>
+				<value>com/sh/manage/entity/Store.hbm.xml</value>
+				<value>com/sh/manage/entity/Service.hbm.xml</value>
+				<value>com/sh/manage/entity/Development.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="search*" read-only="true" />
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="login*" read-only="true" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="check*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut expression="execution(* com.sh.manage.biz.*.*(..))"
+			id="serviceMethod" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />
+	</aop:config>
+
+	<bean id="userDao" class="com.sh.manage.dao.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="userBiz" class="com.sh.manage.biz.impl.UserBizImpl">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+
+	<bean id="userAction" class="com.sh.manage.action.UserAction">
+		<property name="userBiz" ref="userBiz"></property>
+	</bean>
+
+	<bean id="roleDao" class="com.sh.manage.dao.impl.RoleDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="roleBiz" class="com.sh.manage.biz.impl.RoleBizImpl">
+		<property name="roleDao" ref="roleDao"></property>
+	</bean>
+
+	<bean id="roleAction" class="com.sh.manage.action.RoleAction">
+		<property name="roleBiz" ref="roleBiz"></property>
+	</bean>
+
+	<bean id="rightDao" class="com.sh.manage.dao.impl.RightDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="rightBiz" class="com.sh.manage.biz.impl.RightBizImpl">
+		<property name="rightDao" ref="rightDao"></property>
+	</bean>
+
+	<bean id="rightAction" class="com.sh.manage.action.RightAction">
+		<property name="rightBiz" ref="rightBiz"></property>
+	</bean>
+
+	<bean id="userRoleDao" class="com.sh.manage.dao.impl.UserRoleDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="userRoleBiz" class="com.sh.manage.biz.impl.UserRoleBizImpl">
+		<property name="userRoleDao" ref="userRoleDao"></property>
+	</bean>
+
+	<bean id="userRoleAction" class="com.sh.manage.action.UserRoleAction">
+		<property name="userRoleBiz" ref="userRoleBiz"></property>
+	</bean>
+	
+	<bean id="roleRightDao" class="com.sh.manage.dao.impl.RoleRightDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="roleRightBiz" class="com.sh.manage.biz.impl.RoleRightBizImpl">
+		<property name="roleRightDao" ref="roleRightDao"></property>
+	</bean>
+	
+	<bean id="roleRightAction" class="com.sh.manage.action.RoleRightAction">
+		<property name="roleRightBiz" ref="roleRightBiz"></property>
+	</bean>
+	
+	<bean id="userRoleRightDao" class="com.sh.manage.dao.impl.UserRoleRightDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="userRoleRightBiz" class="com.sh.manage.biz.impl.UserRoleRightBizImpl">
+		<property name="userRoleRightDao" ref="userRoleRightDao"></property>
+	</bean>
+	
+	<bean id="userRoleRightAction" class="com.sh.manage.action.UserRoleRightAction">
+		<property name="userRoleRightBiz" ref="userRoleRightBiz"></property>
+	</bean>
+
+	<bean id="storeDao" class="com.sh.manage.dao.impl.StoreDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="storeBiz" class="com.sh.manage.biz.impl.StoreBizImpl">
+		<property name="storeDao" ref="storeDao"></property>
+	</bean>
+
+	<bean id="storeAction" class="com.sh.manage.action.StoreAction">
+		<property name="storeBiz" ref="storeBiz"></property>
+		<property name="userBiz" ref="userBiz"></property>
+	</bean>
+
+	<bean id="serviceDao" class="com.sh.manage.dao.impl.ServiceDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="serviceBiz" class="com.sh.manage.biz.impl.ServiceBizImpl">
+		<property name="serviceDao" ref="serviceDao"></property>
+	</bean>
+
+	<bean id="serviceAction" class="com.sh.manage.action.ServiceAction">
+		<property name="serviceBiz" ref="serviceBiz"></property>
+		<property name="storeBiz" ref="storeBiz"></property>
+	</bean>
+
+	<bean id="developmentDao" class="com.sh.manage.dao.impl.DevelopmentDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="developmentBiz" class="com.sh.manage.biz.impl.DevelopmentBizImpl">
+		<property name="developmentDao" ref="developmentDao"></property>
+	</bean>
+
+	<bean id="developmentAction" class="com.sh.manage.action.DevelopmentAction">
+		<property name="developmentBiz" ref="developmentBiz"></property>
+		<property name="storeBiz" ref="storeBiz"></property>
+	</bean>
+</beans>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.sh.manage.entity">
+	<class name="Service" table="T_Service">
+		<id name="serviceId" type="java.lang.Integer">
+			<column name="serviceId"></column>
+			<generator class="sequence">
+				<param name="sequence">service_id_seq</param>
+			</generator>
+		</id>
+
+		<property name="serviceName" type="java.lang.String">
+			<column name="serviceName" not-null="true" length="50"></column>
+		</property>
+
+		<many-to-one name="store" column="storeIdForeign" class="Store"></many-to-one>
+
+		<property name="storeName" type="java.lang.String">
+			<column name="storeName" not-null="true" length="50"></column>
+		</property>
+		
+		<property name="storeIdSelf" type="java.lang.Integer">
+			<column name="storeIdSelf" not-null="true"></column>
+		</property>
+
+		<property name="serviceCheap" type="java.lang.String">
+			<column name="serviceCheap" not-null="true" length="20"></column>
+		</property>
+
+		<property name="beforePrice" type="java.lang.Integer">
+			<column name="beforePrice" not-null="true"></column>
+		</property>
+
+		<property name="afterPrice" type="java.lang.Integer">
+			<column name="afterPrice" not-null="true"></column>
+		</property>
+
+		<property name="costTime" type="java.lang.Integer">
+			<column name="costTime" not-null="true"></column>
+		</property>
+	</class>
+</hibernate-mapping>
